@@ -5,7 +5,7 @@
 from typing import Tuple
 
 
-def index_range(page, page_size):
+def index_range(page: int, page_size: int) -> tuple:
     """
     return tuple containing start and end index for given page and page size
     Page numbers are 1-indexed
