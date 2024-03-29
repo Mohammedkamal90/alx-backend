@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Pagination function
 """
+
+from typing import Tuple
+
+
 def index_range(page, page_size):
     """
     return tuple containing start and end index for given page and page size
