@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """
-module define Flask app with Babel extension for internationalization
+This module defines a Flask app with Babel extension for internationalization.
 """
 
+from typing import Optional
 from flask import Flask, render_template, request
 from flask_babel import Babel
 
@@ -12,7 +13,7 @@ babel = Babel(app)
 
 class Config:
     """
-    configuration class for Flask app
+    Configuration class for Flask app.
     """
     LANGUAGES = ['en', 'fr']
     BABEL_DEFAULT_LOCALE = 'en'
@@ -22,21 +23,31 @@ class Config:
 app.config.from_object(Config)
 
 
-@babel.localeselector
-def get_locale():
+def get_locale() -> Optional[str]:
     """
-    determine the best-matching language for the user from the request
+    determine best-matching language for user from the request
 
     Returns:
-        str: The best-matching language code
+        str or None: best-matching language code, or None if no language match
     """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-@app.route('/')
-def index():
+@babel.localeselector
+def select_locale() -> Optional[str]:
     """
-    route for the main page
+    Select the locale for the request based on the user's preferences.
+
+    Returns:
+        str or None: The selected locale, or None if no locale is selected.
+    """
+    return get_locale()
+
+
+@app.route('/')
+def index() -> str:
+    """
+    Route for the main page.
 
     Returns:
         str: Rendered HTML content.
